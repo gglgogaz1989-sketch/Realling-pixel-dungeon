@@ -149,10 +149,10 @@ public class Assets {
 		public static final String HALLS_BOSS           = "music/halls_boss.ogg";
 		public static final String HALLS_BOSS_FINALE   = "music/halls_boss_finale.ogg";
 
-	    public static final String SHIRD_SLEEP  = "sprites/shird_sleep.png";
-        public static final String SHIRD_IDLE   = "sprites/shird_idle.png";
-        public static final String SHIRD_CAST   = "sprites/shird_cast.png";
-        public static final String SHIRD_ATTACK = "sprites/shird_attack.png";
+	public static final String SHIRD_SLEEP  = "sprites/Shird_sleep.png";
+    public static final String SHIRD_IDLE   = "sprites/Shird_idle.png";
+    public static final String SHIRD_CAST   = "sprites/Shird_cast.png";
+    public static final String SHIRD_ATTACK = "sprites/Shird_attack.png";
 		
 	}
 
