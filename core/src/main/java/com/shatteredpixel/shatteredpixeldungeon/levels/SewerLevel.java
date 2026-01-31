@@ -141,10 +141,21 @@ public class SewerLevel extends RegularLevel {
 						1, 1, 1, 1, 1};
 	}
 
-	@Override
+		@Override
 	protected void createMobs() {
 		Ghost.Quest.spawn( this, roomExit );
 		super.createMobs();
+
+		// Просто спавним лопату на 1 этаже
+		if (Dungeon.depth == 1) {
+			// Ищем случайную пустую клетку
+			int cell = randomRespawnCell(Dungeon.hero); 
+			if (cell != -1) {
+				Dungeon.level.drop(new Shovel(), cell).sprite.drop();
+			}
+		}
+	}
+		
 	}
 	
 	@Override
@@ -331,14 +342,7 @@ public class SewerLevel extends RegularLevel {
                     break;
                 }
             }
-            
-            if (cell != -1) {
-                boss.pos = cell;
-                Dungeon.level.spawnMob(boss);
-                // Спавним лопату прямо под боссом
-                Dungeon.level.drop(new Shovel(), cell).sprite.drop();
-            }
         }
 	}
 }
-}
+
