@@ -1,14 +1,13 @@
-package com.shatteredpixel.shatteredpixeldungeon.items.weapons;
+package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 
 public class Shovel extends MeleeWeapon {
 
     public Shovel() {
-        // Tier 4, скорость 1, точность 1
+        // Tier 4
         super( 4, 1f, 1f );
-        // Пока используем временную иконку (например, 4 - это меч), 
-        // чтобы игра не вылетала до обновления items.png
+        // Временная иконка, пока не обновишь items.png
         image = 4; 
     }
 
@@ -26,7 +25,6 @@ public class Shovel extends MeleeWeapon {
 
     @Override
     public String desc() {
-        return "Раньше это оружие использовалось для закапывания могил, " +
-               "но сейчас его просто можно найти на этажах.";
+        return "Раньше это оружие использовалось для закапывания могил, но сейчас его можно просто найти на этажах.";
     }
 }
