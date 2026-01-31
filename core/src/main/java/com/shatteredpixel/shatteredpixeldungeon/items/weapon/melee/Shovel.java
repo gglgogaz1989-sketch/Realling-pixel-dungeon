@@ -1,29 +1,21 @@
-package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
+package com.shatteredpixel.shatteredpixeldungeon.items.weapons;
 
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class Shovel extends MeleeWeapon {
+    {
+        name = "Лопата";
+        // Указываем индекс иконки (выбери свободный в твоем спрайт-листе)
+        image = 15; 
+    }
 
     public Shovel() {
-        // Оставляем скобки пустыми! Это важно для твоей версии Weapon.java
-        super();
-
-        // Задаем параметры через переменные
-        tier = 4;   // Тир 4 (определяет силу)
-        image = 4;  // Временная картинка меча
+        // Урон: минимум 5, максимум 12
+        initValues(5, 12, 1.0f, 1.0f);
     }
 
     @Override
-    public int min() { return 10; }
-
-    @Override
-    public int max() { return 20; }
-
-    @Override
-    public String name() { return "Лопата"; }
-
-    @Override
     public String desc() {
-        return "Раньше это оружие использовалось для закапывания могил.";
+        return "Старая садовая лопата. Не слишком острое, но тяжелое орудие.";
     }
 }
