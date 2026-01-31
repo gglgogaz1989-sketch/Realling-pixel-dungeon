@@ -60,6 +60,10 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.ColorMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Shird;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Shovel;
+
 
 public class SewerLevel extends RegularLevel {
 
