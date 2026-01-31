@@ -85,15 +85,6 @@ public class SewerLevel extends RegularLevel {
 	}
 	
 	@Override
-	if (Dungeon.depth == 1) {
-    Shovel shovel = new Shovel();
-    // Спавним в случайной пустой клетке на 1 этаже
-    int pos = randomRespawnCell();
-    if (pos != -1) {
-        Dungeon.level.drop(shovel, pos);
-    }
-			}
-	
 	protected int standardRooms(boolean forceMax) {
 		if (forceMax) return 6;
 		//4 to 6, average 5
@@ -318,3 +309,12 @@ public class SewerLevel extends RegularLevel {
 		}
 	}
 }
+    @Override
+    protected void decorate() {
+        super.decorate();
+        if (com.shatteredpixel.shatteredpixeldungeon.levels.Dungeon.depth == 1) {
+            drop(new com.shatteredpixel.shatteredpixeldungeon.items.weapons.Shovel(), 
+                 com.shatteredpixel.shatteredpixeldungeon.levels.Dungeon.level.randomRespawnCell());
+        }
+	}
+
