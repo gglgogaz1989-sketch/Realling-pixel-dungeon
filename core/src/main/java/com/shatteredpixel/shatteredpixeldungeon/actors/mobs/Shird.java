@@ -1,82 +1,54 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Shield;
-import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.AmuletOfIndor;
+import com.shatteredpixel.shatteredpixeldungeon.actors.ai.MeleeAI;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ShirdSprite;
-import com.watabou.utils.Random;
+import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapons.Shovel;
 
 public class Shird extends Mob {
-
-    private int summonCooldown = 0;
-    private boolean shieldPhaseTriggered = false;
 
     {
         name = "Ширд";
         spriteClass = ShirdSprite.class;
-        HP = HT = 1500;
-        flying = true;
-    }
 
-    @Override
-    protected boolean act() {
-        if (HP <= 0) return super.act();
+        hp = maxHP = 60;
+        defenseSkill = 10;
+        baseSpeed = 1.2f;
 
-        // 1 СПОСОБКА: Просыпается на 1000 ХП
-        if (HP <= 1000 && state == SLEEPING) {
-            state = WANDERING;
-            sprite.parent.add(new Shield()); // Визуальный эффект пробуждения
-        }
-
-        // 2 СПОСОБКА: Призыв врагов каждые 5 ходов (если ХП <= 750)
-        if (HP <= 750 && HP > 100) {
-            if (summonCooldown-- <= 0) {
-                spawnMinion();
-                summonCooldown = 5;
-                ((ShirdSprite)sprite).playCast(); // Анимация призыва
-            }
-        }
-
-        return super.act();
+        // Настройка ИИ
+        AI = new MeleeAI();
     }
 
     @Override
     public int damageRoll() {
-        // 3 СПОСОБКА: Лазер (10-30 урона) когда ХП < 500
-        if (HP <= 500 && HP > 100) {
-            return Random.Int(10, 30);
-        }
-        // 5 ФАЗА: Почти смерть (урон 5-35)
-        return Random.Int(5, 35);
+        return 8 + (int)(Math.random() * 7); // Урон 8-15
     }
 
     @Override
-    public int defenseProc(Char attacker, int damage) {
-        // 4 СПОСОБКА: ЩИТ ЯРОСТИ (на 100 ХП)
-        if (HP <= 100 && !shieldPhaseTriggered) {
-            shieldPhaseTriggered = true;
-            say("Ярость поглотит тебя!");
-            // Здесь можно добавить призыв редких врагов
-            return 0; 
-        }
-
-        // Пока активен щит, босса нельзя ударить (если ты так решишь добавить проверку миньонов)
-        return super.defenseProc(attacker, damage);
+    public int attackSkill(Char target) {
+        return 14;
     }
 
-    private void spawnMinion() {
-        // Код для спавна случайного моба рядом с боссом
-        Mob minion = Mob.make(Dungeon.depth); 
-        minion.pos = Dungeon.level.randomRespawnCell();
-        if (minion.pos != -1) {
-            GameScene.add(minion);
-        }
+    @Override
+    public void notice() {
+        super.notice();
+        // Босс кричит при встрече
+        yell("Кто посмел потревожить мои владения?!");
     }
 
     @Override
     public void die(Object cause) {
-        say("Нет, нет, нет зачем ты меня убил? Я, я хотел чтоб никто не забрал мой амулет...");
-        drop(new AmuletOfIndor(), pos);
         super.die(cause);
+        // При смерти босса выпадает твоя лопата
+        Dungeon.level.drop(new Shovel(), pos).sprite.drop();
+        GLog.w("Ширд повержен! Лопата выпала на землю.");
     }
-          }
+
+    @Override
+    public String description() {
+        return "Древний страж канализации. Он выглядит очень злым и сжимает в руках старую лопату.";
+    }
+}
