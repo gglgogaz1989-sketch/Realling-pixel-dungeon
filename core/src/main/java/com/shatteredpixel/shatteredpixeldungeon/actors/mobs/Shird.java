@@ -1,11 +1,9 @@
 package com.shatteredpixel.shatteredpixeldungeon.actors.mobs;
 
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.ai.MeleeAI;
 import com.shatteredpixel.shatteredpixeldungeon.sprites.ShirdSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapons.Shovel;
 
 public class Shird extends Mob {
@@ -18,13 +16,13 @@ public class Shird extends Mob {
         defenseSkill = 10;
         baseSpeed = 1.2f;
 
-        // Настройка ИИ
-        AI = new MeleeAI();
+        // Вместо MeleeAI используем стандартное состояние охоты
+        state = HUNTING; 
     }
 
     @Override
     public int damageRoll() {
-        return 8 + (int)(Math.random() * 7); // Урон 8-15
+        return 8 + (int)(Math.random() * 7); 
     }
 
     @Override
@@ -35,20 +33,19 @@ public class Shird extends Mob {
     @Override
     public void notice() {
         super.notice();
-        // Босс кричит при встрече
         yell("Кто посмел потревожить мои владения?!");
     }
 
     @Override
     public void die(Object cause) {
         super.die(cause);
-        // При смерти босса выпадает твоя лопата
+        // Выпадение лопаты при смерти
         Dungeon.level.drop(new Shovel(), pos).sprite.drop();
         GLog.w("Ширд повержен! Лопата выпала на землю.");
     }
 
     @Override
     public String description() {
-        return "Древний страж канализации. Он выглядит очень злым и сжимает в руках старую лопату.";
+        return "Древний страж канализации. Он выглядит очень злым.";
     }
 }
