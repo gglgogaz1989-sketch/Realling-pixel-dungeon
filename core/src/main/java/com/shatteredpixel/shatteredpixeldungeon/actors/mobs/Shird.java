@@ -12,9 +12,10 @@ public class Shird extends Mob {
 
 	public Shird() {
 		super();
-		// В этой версии мы присваиваем значения напрямую полям
-		this.name = "Ширд";
-		this.hp = this.maxHP = 1500;
+		// В этой версии используем методы для установки параметров
+		nameString = "Ширд";
+		hp(1500);
+		ht(1500);
 		
 		spriteClass = ShirdSprite.class;
 		state = HUNTING;
