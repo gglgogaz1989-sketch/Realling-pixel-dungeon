@@ -10,33 +10,25 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
 
 public class Shird extends Mob {
 
-	{
-		// В новых версиях Shattered используем методы вместо переменных
-		name("Ширд");
-		hp(1500);
-		maxHP(1500);
+	public Shird() {
+		super();
+		// В этой версии мы присваиваем значения напрямую полям
+		this.name = "Ширд";
+		this.hp = this.maxHP = 1500;
 		
 		spriteClass = ShirdSprite.class;
-		defenseSkill = 30;
-		baseSpeed = 1f;
-		
 		state = HUNTING;
 	}
 
 	@Override
-	public int damageRoll() {
-		return 35;
-	}
+	public int damageRoll() { return 35; }
 
 	@Override
-	public int attackSkill(Char target) {
-		return 30;
-	}
+	public int attackSkill(Char target) { return 30; }
 
 	@Override
 	public void damage(int dmg, Object src) {
 		super.damage(dmg, src);
-		// Обновляем полоску босса
 		BossHealthBar.assignBoss(this);
 	}
 
