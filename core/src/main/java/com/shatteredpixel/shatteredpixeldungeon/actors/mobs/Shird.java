@@ -11,32 +11,33 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
 
 public class Shird extends Mob {
 
-    {
-        name = "Ширд";
+    // В новых версиях инициализацию лучше делать в конструкторе или через методы
+    public Shird() {
+        super();
+        
+        // Используем методы доступа, если переменные напрямую недоступны
+        this.name = "Ширд"; 
+        this.hp = this.maxHP = 1500;
+        
         spriteClass = ShirdSprite.class;
-
-        hp = maxHP = 1500; 
-        defenseSkill = 30;
-        baseSpeed = 1f;
-
         state = HUNTING;
     }
 
     @Override
     public int damageRoll() {
-        return 30 + (int)(Math.random() * 20);
+        return 35; 
     }
 
     @Override
     public int attackSkill(Char target) {
-        return 35;
+        return 30;
     }
 
+    // ИСПРАВЛЕНИЕ: В твоем движке damage возвращает void!
     @Override
-    public int damage(int dmg, Object src) {
-        int realDamage = super.damage(dmg, src);
+    public void damage(int dmg, Object src) {
+        super.damage(dmg, src); // Просто вызываем, ничего не сохраняя в int
         BossHealthBar.assignBoss(this); 
-        return realDamage;
     }
 
     @Override
@@ -48,7 +49,7 @@ public class Shird extends Mob {
 
     @Override
     public void die(Object cause) {
-        // Выпадение Лопаты, Амулета и Большого щита
+        // Выпадение предметов
         Dungeon.level.drop(new Shovel(), pos).sprite.drop();
         Dungeon.level.drop(new Amulet(), pos).sprite.drop();
         Dungeon.level.drop(new Greatshield(), pos).sprite.drop();
