@@ -85,6 +85,15 @@ public class SewerLevel extends RegularLevel {
 	}
 	
 	@Override
+	if (Dungeon.depth == 1) {
+    Shovel shovel = new Shovel();
+    // Спавним в случайной пустой клетке на 1 этаже
+    int pos = randomRespawnCell();
+    if (pos != -1) {
+        Dungeon.level.drop(shovel, pos);
+    }
+			}
+	
 	protected int standardRooms(boolean forceMax) {
 		if (forceMax) return 6;
 		//4 to 6, average 5
