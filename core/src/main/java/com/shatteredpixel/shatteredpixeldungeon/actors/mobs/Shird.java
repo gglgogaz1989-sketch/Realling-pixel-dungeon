@@ -6,45 +6,43 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.ShirdSprite;
 import com.shatteredpixel.shatteredpixeldungeon.utils.GLog;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Shovel;
 
+// Обязательно "extends Mob", чтобы появились hp и name
 public class Shird extends Mob {
 
     {
         name = "Ширд";
         spriteClass = ShirdSprite.class;
 
-        hp = maxHP = 70;
-        defenseSkill = 12;
-        baseSpeed = 1.2f;
+        hp = maxHP = 1500; 
+        defenseSkill = 25;
+        baseSpeed = 1.0f;
 
         state = HUNTING; 
     }
 
     @Override
     public int damageRoll() {
-        return 10 + (int)(Math.random() * 9); 
+        return 25 + (int)(Math.random() * 15); 
     }
 
     @Override
     public int attackSkill(Char target) {
-        return 15;
+        return 30;
     }
 
+    // Убираем @Override attack, так как в Char он final. 
+    // Вместо этого используем стандартную логику моба.
+    
     @Override
     public void notice() {
         super.notice();
-        yell("Я заберу твою душу этой лопатой!");
-    }
-
-    @Override
-    public boolean attack(Char enemy) {
-        if (sprite != null) sprite.attack(enemy.pos);
-        return super.attack(enemy);
+        yell("Твой путь заканчивается здесь!");
     }
 
     @Override
     public void die(Object cause) {
         super.die(cause);
         Dungeon.level.drop(new Shovel(), pos).sprite.drop();
-        GLog.w("Ширд повержен! Вы нашли его старую лопату.");
+        GLog.w("Невероятно... Ширд пал. Вы получили его легендарную лопату!");
     }
 }
