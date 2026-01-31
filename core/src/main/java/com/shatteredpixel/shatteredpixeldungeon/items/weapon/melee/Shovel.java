@@ -1,39 +1,35 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
-import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
+import com.shatteredpixel.shatteredpixeldungeon.items.ItemSpriteSheet;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
 public class Shovel extends MeleeWeapon {
 
-	{
-		image = ItemSpriteSheet.MACE; 
-		hitSound = Assets.Sounds.HIT; 
-		tier = 3;
-	}
+    {
+        // Используем спрайт меча, так как он гарантированно есть в атласе
+        image = ItemSpriteSheet.SWORD;
+        tier = 3;
+    }
 
-	@Override
-	public int max(int lvl) {
-		return 20 + (lvl * 5);
-	}
+    @Override
+    public String name() {
+        return "Лопата";
+    }
 
-	@Override
-	public int proc(Char attacker, Char defender, int damage) {
-		if (Math.random() < 0.10) {
-			Buff.prolong(defender, Paralysis.class, 2f);
-		}
-		return super.proc(attacker, defender, damage);
-	}
+    @Override
+    public String desc() {
+        return "Старая, но всё ещё крепкая лопата. Кажется, ею можно не только копать.";
+    }
 
-	@Override
-	protected void duelistAbility(Hero hero, Integer target) {
-		Char enemy = (Char)Actor.findChar(target);
-		if (enemy != null) {
-			hero.attack(enemy);
-		}
-	}
+    // Метод для выдачи лопаты прямо в руки герою (самый безопасный способ без вылетов)
+    public static void giveToHero() {
+        if (Dungeon.hero != null) {
+            Shovel shovel = new Shovel();
+            if (!shovel.collect(Dungeon.hero.inventory())) {
+                // Если инвентарь полон, бросаем под ноги
+                Dungeon.level.drop(shovel, Dungeon.hero.pos).sprite.drop();
+            }
+        }
+    }
 }
