@@ -12,7 +12,7 @@ public class Shird extends Mob {
 
 	public Shird() {
 		super();
-		// В этой версии используем методы для установки параметров
+		// Используем правильные поля для версии 2025
 		nameString = "Ширд";
 		hp(1500);
 		ht(1500);
@@ -35,6 +35,7 @@ public class Shird extends Mob {
 
 	@Override
 	public void die(Object cause) {
+		// Выпадение предметов при смерти
 		Dungeon.level.drop(new Shovel(), pos).sprite.drop();
 		Dungeon.level.drop(new Amulet(), pos).sprite.drop();
 		Dungeon.level.drop(new Greatshield(), pos).sprite.drop();
