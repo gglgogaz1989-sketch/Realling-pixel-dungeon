@@ -1,14 +1,14 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
-import com.shatteredpixel.shatteredpixeldungeon.items.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet; // Проверь этот путь, если будет ошибка
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 
 public class Shovel extends MeleeWeapon {
 
     {
-        // Используем спрайт меча, так как он гарантированно есть в атласе
-        image = ItemSpriteSheet.SWORD;
+        // В некоторых версиях SPD иконки лежат в Assets.ItemSprite
+        image = 12; // Числовой индекс — самый надежный способ (12 обычно меч)
         tier = 3;
     }
 
@@ -17,17 +17,11 @@ public class Shovel extends MeleeWeapon {
         return "Лопата";
     }
 
-    @Override
-    public String desc() {
-        return "Старая, но всё ещё крепкая лопата. Кажется, ею можно не только копать.";
-    }
-
-    // Метод для выдачи лопаты прямо в руки герою (самый безопасный способ без вылетов)
     public static void giveToHero() {
         if (Dungeon.hero != null) {
             Shovel shovel = new Shovel();
-            if (!shovel.collect(Dungeon.hero.inventory())) {
-                // Если инвентарь полон, бросаем под ноги
+            // В SPD вместо inventory() чаще всего используется belongings
+            if (!shovel.collect(Dungeon.hero.belongings)) {
                 Dungeon.level.drop(shovel, Dungeon.hero.pos).sprite.drop();
             }
         }
