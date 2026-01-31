@@ -1,34 +1,30 @@
-package com.shatteredpixel.shatteredpixeldungeon.sprites;
+package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
+import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
+import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
 
-public class ShirdSprite extends MobSprite {
+public class Shovel extends MeleeWeapon {
 
-    public ShirdSprite() {
-        super();
-        // Указываем полный путь к переменной внутри класса Assets
-        texture(Assets.Sprites.SHIRD_IDLE); 
-    }
+	{
+		image = ItemSpriteSheet.MACE; 
+		hitSound = Assets.Sounds.HIT; 
+		tier = 3;
+	}
 
-    @Override
-    public void update() {
-        super.update();
+	@Override
+	public int max(int lvl) {
+		return 20 + (lvl * 5);
+	}
 
-        if (ch instanceof Mob) {
-            Mob m = (Mob) ch;
-            // Исправляем обращение к SLEEPING через экземпляр 'm'
-            if (m.state == m.SLEEPING) {
-                texture(Assets.Sprites.SHIRD_SLEEP);
-            } else {
-                texture(Assets.Sprites.SHIRD_IDLE);
-            }
-        }
-    }
-    
-    @Override
-    public void attack(int pos) {
-        texture(Assets.Sprites.SHIRD_ATTACK);
-        super.attack(pos);
-    }
+	@Override
+	public int proc(Char attacker, Char defender, int damage) {
+		if (Math.random() < 0.10) {
+			// ИСПРАВЛЕНИЕ: в новых версиях используется .set() или конструктор
+			Buff.affect(defender, Paralysis.class).set(2f); 
+		}
+		return super.proc(attacker, defender, damage);
+	}
 }
