@@ -7,7 +7,6 @@ public class ShirdSprite extends MobSprite {
 
 	public ShirdSprite() {
 		super();
-		// Если SHIRD_IDLE выдает ошибку, временно поставь Assets.Sprites.RAT
 		texture(Assets.Sprites.SHIRD_IDLE); 
 	}
 
@@ -16,8 +15,8 @@ public class ShirdSprite extends MobSprite {
 		super.update();
 		if (ch instanceof Mob) {
 			Mob m = (Mob) ch;
-			// Используем методы для проверки состояния, если state закрыт
-			if (m.state == Mob.SLEEPING) {
+			// Обращаемся к SLEEPING через объект m, а не через класс Mob
+			if (m.state == m.SLEEPING) {
 				texture(Assets.Sprites.SHIRD_SLEEP);
 			} else {
 				texture(Assets.Sprites.SHIRD_IDLE);
