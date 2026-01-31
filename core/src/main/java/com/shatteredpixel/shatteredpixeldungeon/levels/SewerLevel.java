@@ -312,5 +312,32 @@ public class SewerLevel extends RegularLevel {
 			
 			left = lifespan = 0.4f;
 		}
+	    @Override
+    protected void createMonsters() {
+        super.createMonsters();
+        
+        // Спавним босса только на 1-м уровне канализации
+        if (Dungeon.depth == 1) {
+            Shird boss = new Shird();
+            
+            // Безопасный поиск клетки для спавна
+            int cell = -1;
+            // Пытаемся найти подходящую пустую клетку 100 раз
+            for (int i = 0; i < 100; i++) {
+                int p = randomRespawnCell();
+                // Проверяем, что клетка проходима и на ней нет другого персонажа
+                if (p != -1 && passable[p] && Actor.findChar(p) == null) {
+                    cell = p;
+                    break;
+                }
+            }
+            
+            if (cell != -1) {
+                boss.pos = cell;
+                Dungeon.level.spawnMob(boss);
+                // Спавним лопату прямо под боссом
+                Dungeon.level.drop(new Shovel(), cell).sprite.drop();
+            }
+        }
 	}
 }
