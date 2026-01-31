@@ -1,17 +1,17 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
-// Мы импортируем основной класс оружия, чтобы игра поняла, от кого мы наследуемся
+// Обязательный импорт, чтобы игра поняла, что это оружие
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.MeleeWeapon;
 
 public class Shovel extends MeleeWeapon {
 
     public Shovel() {
-        // В новых версиях скобки должны быть пустые!
+        // Оставляем скобки пустыми (fix для новых версий игры)
         super();
 
-        // Мы задаем параметры здесь, а не в скобках
+        // Задаем параметры вручную
         tier = 4;
-        image = 4; // Пока временная картинка
+        image = 4; // Пока ставим картинку меча, чтобы не крашнулось
     }
 
     @Override
@@ -31,6 +31,6 @@ public class Shovel extends MeleeWeapon {
 
     @Override
     public String desc() {
-        return "Раньше это оружие использовалось для закапывания могил, но сейчас его можно просто найти на этажах.";
+        return "Раньше это оружие использовалось для закапывания могил.";
     }
 }
