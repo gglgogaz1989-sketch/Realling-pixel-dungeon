@@ -147,7 +147,13 @@ public class Assets {
 		public static final String HALLS_3              = "music/halls_3.ogg";
 		public static final String HALLS_TENSE          = "music/halls_tense.ogg";
 		public static final String HALLS_BOSS           = "music/halls_boss.ogg";
-		public static final String HALLS_BOSS_FINALE    = "music/halls_boss_finale.ogg";
+		public static final String HALLS_BOSS_FINALE   = "music/halls_boss_finale.ogg";
+
+	    public static final String SHIRD_SLEEP  = "sprites/shird_sleep.png";
+        public static final String SHIRD_IDLE   = "sprites/shird_idle.png";
+        public static final String SHIRD_CAST   = "sprites/shird_cast.png";
+        public static final String SHIRD_ATTACK = "sprites/shird_attack.png";
+		
 	}
 
 	public static class Sounds {
