@@ -10,35 +10,49 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
 
 public class Shird extends Mob {
 
-	public Shird() {
-		super();
-		// Используем правильные поля для версии 2025
-		nameString = "Ширд";
-		hp(1500);
-		ht(1500);
-		
+	{
 		spriteClass = ShirdSprite.class;
+		
+		// Настройки здоровья как у Rat, но для босса
+		HP = HT = 1500;
+		defenseSkill = 30;
+
 		state = HUNTING;
 	}
 
 	@Override
-	public int damageRoll() { return 35; }
+	public String name() {
+		return "Ширд";
+	}
 
 	@Override
-	public int attackSkill(Char target) { return 30; }
+	public int damageRoll() {
+		return 35;
+	}
+
+	@Override
+	public int attackSkill(Char target) {
+		return 30;
+	}
 
 	@Override
 	public void damage(int dmg, Object src) {
 		super.damage(dmg, src);
+		// Показываем полоску босса при получении урона
 		BossHealthBar.assignBoss(this);
 	}
 
 	@Override
 	public void die(Object cause) {
-		// Выпадение предметов при смерти
+		// Выпадение предметов
 		Dungeon.level.drop(new Shovel(), pos).sprite.drop();
 		Dungeon.level.drop(new Amulet(), pos).sprite.drop();
-		Dungeon.level.drop(new Greatshield(), pos).sprite.drop();
+		
+		// Большой щит (Greatshield)
+		try {
+			Dungeon.level.drop(new Greatshield(), pos).sprite.drop();
+		} catch (Exception e) { /* на случай если щит называется иначе */ }
+		
 		super.die(cause);
 	}
 }
