@@ -2,25 +2,21 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
-import com.shatteredpixel.shatteredpixeldungeon.utils.Random;
-
-// Пробуем импортировать всё из папок, где может быть MeleeWeapon
-import com.shatteredpixel.shatteredpixeldungeon.items.*;
-import com.shatteredpixel.shatteredpixeldungeon.items.weapons.*;
+// Импортируем из основной папки items, так как weapons не найдена
+import com.shatteredpixel.shatteredpixeldungeon.items.MeleeWeapon;
 
 public class Shovel extends MeleeWeapon {
 
     public Shovel() {
         name = "Лопата";
-        // Если на эту строку будет ругаться, значит в твоей версии 
-        // метод называется по-другому, но пока оставим так:
         initValues(5, 12, 1.0f, 1.0f); 
     }
 
     @Override
     public void proc(Char attacker, Char defender, int damage) {
         super.proc(attacker, defender, damage);
-        if (Random.Float() < 0.05f) {
+        // Используем стандартный Math.random(), чтобы не зависеть от класса Random
+        if (Math.random() < 0.05) {
             Paralysis.affect(defender, 5f);
         }
     }
