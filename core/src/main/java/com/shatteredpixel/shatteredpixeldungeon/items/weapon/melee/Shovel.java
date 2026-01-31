@@ -1,33 +1,26 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
-// Обязательный импорт, чтобы игра поняла, что это оружие
-import com.shatteredpixel.shatteredpixeldungeon.items.weapon.MeleeWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 
 public class Shovel extends MeleeWeapon {
 
     public Shovel() {
-        // Оставляем скобки пустыми (fix для новых версий игры)
+        // Оставляем скобки пустыми! Это важно для твоей версии Weapon.java
         super();
 
-        // Задаем параметры вручную
-        tier = 4;
-        image = 4; // Пока ставим картинку меча, чтобы не крашнулось
+        // Задаем параметры через переменные
+        tier = 4;   // Тир 4 (определяет силу)
+        image = 4;  // Временная картинка меча
     }
 
     @Override
-    public int min() {
-        return 10;
-    }
+    public int min() { return 10; }
 
     @Override
-    public int max() {
-        return 20;
-    }
+    public int max() { return 20; }
 
     @Override
-    public String name() {
-        return "Лопата";
-    }
+    public String name() { return "Лопата"; }
 
     @Override
     public String desc() {
