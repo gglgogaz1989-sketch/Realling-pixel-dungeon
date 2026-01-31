@@ -1,30 +1,27 @@
-package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
+package com.shatteredpixel.shatteredpixeldungeon.sprites;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
-import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
-import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Paralysis;
-import com.shatteredpixel.shatteredpixeldungeon.sprites.ItemSpriteSheet;
+import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 
-public class Shovel extends MeleeWeapon {
+public class ShirdSprite extends MobSprite {
 
-	{
-		image = ItemSpriteSheet.MACE; 
-		hitSound = Assets.Sounds.HIT; 
-		tier = 3;
+	public ShirdSprite() {
+		super();
+		// Если SHIRD_IDLE выдает ошибку, временно поставь Assets.Sprites.RAT
+		texture(Assets.Sprites.SHIRD_IDLE); 
 	}
 
 	@Override
-	public int max(int lvl) {
-		return 20 + (lvl * 5);
-	}
-
-	@Override
-	public int proc(Char attacker, Char defender, int damage) {
-		if (Math.random() < 0.10) {
-			// ИСПРАВЛЕНИЕ: в новых версиях используется .set() или конструктор
-			Buff.affect(defender, Paralysis.class).set(2f); 
+	public void update() {
+		super.update();
+		if (ch instanceof Mob) {
+			Mob m = (Mob) ch;
+			// Используем методы для проверки состояния, если state закрыт
+			if (m.state == Mob.SLEEPING) {
+				texture(Assets.Sprites.SHIRD_SLEEP);
+			} else {
+				texture(Assets.Sprites.SHIRD_IDLE);
+			}
 		}
-		return super.proc(attacker, defender, damage);
 	}
 }
