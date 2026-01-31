@@ -10,32 +10,41 @@ import com.shatteredpixel.shatteredpixeldungeon.ui.BossHealthBar;
 
 public class Shird extends Mob {
 
-    public Shird() {
-        super();
-        // Если это не сработает, попробуй просто удалить 'this.'
-        this.name = "Ширд"; 
-        this.hp = this.maxHP = 1500;
-        
-        spriteClass = ShirdSprite.class;
-    }
+	{
+		// В новых версиях Shattered используем методы вместо переменных
+		name("Ширд");
+		hp(1500);
+		maxHP(1500);
+		
+		spriteClass = ShirdSprite.class;
+		defenseSkill = 30;
+		baseSpeed = 1f;
+		
+		state = HUNTING;
+	}
 
-    @Override
-    public int damageRoll() { return 35; }
+	@Override
+	public int damageRoll() {
+		return 35;
+	}
 
-    @Override
-    public int attackSkill(Char target) { return 30; }
+	@Override
+	public int attackSkill(Char target) {
+		return 30;
+	}
 
-    @Override
-    public void damage(int dmg, Object src) {
-        super.damage(dmg, src);
-        BossHealthBar.assignBoss(this);
-    }
+	@Override
+	public void damage(int dmg, Object src) {
+		super.damage(dmg, src);
+		// Обновляем полоску босса
+		BossHealthBar.assignBoss(this);
+	}
 
-    @Override
-    public void die(Object cause) {
-        Dungeon.level.drop(new Shovel(), pos).sprite.drop();
-        Dungeon.level.drop(new Amulet(), pos).sprite.drop();
-        Dungeon.level.drop(new Greatshield(), pos).sprite.drop();
-        super.die(cause);
-    }
+	@Override
+	public void die(Object cause) {
+		Dungeon.level.drop(new Shovel(), pos).sprite.drop();
+		Dungeon.level.drop(new Amulet(), pos).sprite.drop();
+		Dungeon.level.drop(new Greatshield(), pos).sprite.drop();
+		super.die(cause);
+	}
 }
