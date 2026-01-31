@@ -1,6 +1,7 @@
 package com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee;
 
 import com.shatteredpixel.shatteredpixeldungeon.Assets;
+import com.shatteredpixel.shatteredpixeldungeon.actors.Actor;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Buff;
@@ -23,7 +24,6 @@ public class Shovel extends MeleeWeapon {
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
 		if (Math.random() < 0.10) {
-			// Используем стандартный метод наложения баффа
 			Buff.prolong(defender, Paralysis.class, 2f);
 		}
 		return super.proc(attacker, defender, damage);
@@ -31,8 +31,7 @@ public class Shovel extends MeleeWeapon {
 
 	@Override
 	protected void duelistAbility(Hero hero, Integer target) {
-		// target — это позиция (int), а не Char. Ищем цель по позиции.
-		Char enemy = Actor.findChar(target);
+		Char enemy = (Char)Actor.findChar(target);
 		if (enemy != null) {
 			hero.attack(enemy);
 		}
