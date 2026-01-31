@@ -7,23 +7,28 @@ public class ShirdSprite extends MobSprite {
 
     public ShirdSprite() {
         super();
-        // Используем IDLE как основную текстуру
-        texture(Assets.SHIRD_IDLE);
+        // Указываем полный путь к переменной внутри класса Assets
+        texture(Assets.Sprites.SHIRD_IDLE); 
     }
 
     @Override
     public void update() {
         super.update();
 
-        // Проверяем, что ch (персонаж) это действительно Mob
         if (ch instanceof Mob) {
             Mob m = (Mob) ch;
-            // Если спит — одна текстура, если нет — другая
-            if (m.state == Mob.SLEEPING) {
-                texture(Assets.SHIRD_SLEEP);
+            // Исправляем обращение к SLEEPING через экземпляр 'm'
+            if (m.state == m.SLEEPING) {
+                texture(Assets.Sprites.SHIRD_SLEEP);
             } else {
-                texture(Assets.SHIRD_IDLE);
+                texture(Assets.Sprites.SHIRD_IDLE);
             }
         }
+    }
+    
+    @Override
+    public void attack(int pos) {
+        texture(Assets.Sprites.SHIRD_ATTACK);
+        super.attack(pos);
     }
 }
