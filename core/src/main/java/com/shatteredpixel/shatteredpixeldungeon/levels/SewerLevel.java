@@ -40,13 +40,13 @@ public class SewerLevel extends RegularLevel {
 	}
 
 	public static final String[] SEWER_TRACK_LIST
-			= new String[]{Assets.Music.SEWERS_1, Assets.Music.SEWERS_2, Assets.Music.SEWERS_2,
-			Assets.Music.SEWERS_1, Assets.Music.SEWERS_3, Assets.Music.SEWERS_3};
-	public static final float[] SEWER_TRACK_CHANCES = new float[]{1f, 1f, 0.5f, 0.25f, 1f, 0.5f};
+			= new String[]{Assets.Music.SEWERS_1, Assets.Music.SEWERS_2, Assets.Music.SEWERS_3};
+	public static final float[] SEWER_TRACK_CHANCES = new float[]{1f, 1f, 1f};
 
 	@Override
 	public void create() {
 		super.create();
+		// Добавляем твою комнату строго на 1-й этаж
 		if (Dungeon.depth == 1 && rooms != null) {
 			rooms.add(new ObsidianRoom());
 		}
@@ -55,6 +55,7 @@ public class SewerLevel extends RegularLevel {
 	@Override
 	protected int specialRooms(boolean forceMax) {
 		int n = super.specialRooms(forceMax);
+		// Резервируем место под ObsidianRoom на глубине 1
 		return Dungeon.depth == 1 ? n + 1 : n;
 	}
 
@@ -84,17 +85,12 @@ public class SewerLevel extends RegularLevel {
 
 	@Override
 	protected Class<?>[] trapClasses() {
-		return Dungeon.depth == 1 ?
-				new Class<?>[]{ WornDartTrap.class } :
-				new Class<?>[]{
-						ChillingTrap.class, ShockingTrap.class, ToxicTrap.class, WornDartTrap.class,
-						AlarmTrap.class, OozeTrap.class,
-						ConfusionTrap.class, FlockTrap.class, SummoningTrap.class, TeleportationTrap.class, GatewayTrap.class };
+		return new Class<?>[]{ ChillingTrap.class, ShockingTrap.class, ToxicTrap.class, WornDartTrap.class };
 	}
 
 	@Override
 	protected float[] trapChances() {
-		return Dungeon.depth == 1 ? new float[]{1} : new float[]{4, 4, 4, 4, 2, 2, 1, 1, 1, 1, 1};
+		return new float[]{1, 1, 1, 1};
 	}
 
 	@Override
@@ -178,6 +174,7 @@ public class SewerLevel extends RegularLevel {
 	private static class Sink extends Emitter {
 		private int pos;
 		private float rippleDelay = 0;
+		// Используем анонимный класс вместо лямбды (->) для совместимости
 		private static final Emitter.Factory factory = new Emitter.Factory() {
 			@Override
 			public void emit(Emitter emitter, int index, float x, float y) {
@@ -185,12 +182,14 @@ public class SewerLevel extends RegularLevel {
 				p.reset( x, y );
 			}
 		};
+
 		public Sink( int pos ) {
 			this.pos = pos;
 			PointF p = DungeonTilemap.tileCenterToWorld( pos );
 			pos( p.x - 2, p.y + 3, 4, 0 );
 			pour( factory, 0.1f );
 		}
+
 		@Override
 		public void update() {
 			if (visible = (pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos])) {
@@ -218,4 +217,4 @@ public class SewerLevel extends RegularLevel {
 			left = lifespan = 0.4f;
 		}
 	}
-}
+		}
