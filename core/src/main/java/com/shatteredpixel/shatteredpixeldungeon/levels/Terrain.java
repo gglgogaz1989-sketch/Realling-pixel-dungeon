@@ -77,6 +77,8 @@ public class Terrain {
 	public static final int AVOID			= 0x20;
 	public static final int LIQUID			= 0x40;
 	public static final int PIT				= 0x80;
+	public static final int OBSIDIAN_CHEST = 127; 
+	
 	
 	public static final int[] flags = new int[256];
 	static {
@@ -123,6 +125,7 @@ public class Terrain {
 		flags[REGION_DECO_ALT] = flags[STATUE_SP];
 		flags[MINE_CRYSTAL] = SOLID;
 		flags[MINE_BOULDER] = SOLID;
+		flags[OBSIDIAN_CHEST] = SOLID;
 
 	}
 
